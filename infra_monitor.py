@@ -17,6 +17,19 @@ class InfraMonitor:
                 nb_violation += 1
         return nb_violation
     
+    # Report average RTT for clients
+    def report_average_rtt(self):
+        sum = 0
+        count = 0
+        for c in self.infra.clients:
+            if c.current_link != None:
+                count += 1
+                sum += c.current_link.rtt
+        if count == 0:
+            return 0
+        else:
+            return sum / count
+    
     # Inspect client informations (current instance + known links)
     def inspect_clients(self):
         for c in self.infra.clients:
