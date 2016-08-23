@@ -19,3 +19,5 @@ infra.scale_instances(50)
 infra.reset_usage()
 # Select instances for clients
 infra.select_instances()
+# Remove unused instances
+infra.prune_instances()

@@ -18,7 +18,7 @@ class Link:
     rtt = 0
     
     def __init__(self, med_rtt):
-        rtt = self.select_dest_uni(med_rtt)
+        self.rtt = self.select_dest_uni(med_rtt)
     
     # Select an rtt value from a Gaussian distribution around median
     def select_dest_gaussian(self, median):
@@ -135,5 +135,15 @@ class Infra:
     def select_instances(self):
         for c in self.clients:
             c.select_nearest_instance(self.instances)
-            
+    
+    # Remove unused instances
+    def prune_instances(self):
+        unused = set()
+        
+        for i in self.instances:
+            if len(i.used_by) == 0:
+                unused.add(i)
+
+        self.instances -= unused
+        self.nodes |= unused
     
