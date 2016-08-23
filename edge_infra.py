@@ -19,6 +19,7 @@ class Link:
     
     def __init__(self, med_rtt):
         self.rtt = self.select_dest_uni(med_rtt)
+        #self.rtt = self.select_dest_gaussian(med_rtt)
     
     # Select an rtt value from a Gaussian distribution around median
     def select_dest_gaussian(self, median):
@@ -32,7 +33,7 @@ class Link:
         if (i == 7) or (i == 8):
             return random.randint(int(median*1.1),int(median*1.4))
         if i == 9:
-            return random.randint(int(median*1.4),int(median*2))
+            return random.randint(int(median*1.4),int(median*10))
     
     # Select an rtt value from a uniform distribution from 0 to 1.5*median
     def select_dest_uni(self, median):
