@@ -48,13 +48,13 @@ class Link:
 
 
 class Client(Node):
-    current_link = None
-    known_links = {}
-    med_rtt = 0
     
     def __init__(self, med_rtt):
         Node.__init__(self)
         self.med_rtt = med_rtt
+        self.current_link = None
+        self.current_instance = None
+        self.known_links = {}
         
     # Select the nearest instance
     def select_nearest_instance(self, instances):
@@ -79,8 +79,9 @@ class Client(Node):
         if selected == None:
             return
         
-        # Record selected link
+        # Record selected link and instance
         self.current_link = self.known_links[selected]
+        self.current_instance = selected
         # Add current client in instance used_by
         selected.used_by.add(self)
 
