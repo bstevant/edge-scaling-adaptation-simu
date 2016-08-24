@@ -14,4 +14,4 @@ class AdaptationEngine:
             self.infra.scale_instances(next_instances)
             self.infra.reset_usage()
             self.infra.select_instances()
-            self.infra.prune_instances()
+        self.infra.prune_instances()

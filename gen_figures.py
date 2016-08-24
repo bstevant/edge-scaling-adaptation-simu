@@ -97,6 +97,31 @@ def plot_log_adaptation():
             ylabel="Count",
             hardcopy="plots/adapt_log.png")
 
+##################################################
+# Plot adaptation scenario based on nb of clients
+def plot_adapt_scenario():
+    nb_iter = 300
+    nb_clients = {100:200, 200:400}
+    rtt_sla = 10
+    infra = Infra(1000,100,100)
+    monit = InfraMonitor(infra)
+    adapt = AdaptationEngine(infra, monit)
+    slaviol = []
+    instances = []
+    
+    for i in range(nb_iter):
+        if i in nb_clients.keys():
+            infra.scale_clients(nb_clients[i], 200)
+        instances.append(monit.report_nb_instances())
+        slaviol.append(monit.report_sla_violations(rtt_sla))
+        adapt.adapt_scaling_log(rtt_sla)
+    
+    x = np.arange(nb_iter)
+    gp.plot((x, np.array(slaviol), {'legend':'# SLA violations','with': 'filledcurve x1 fill transparent solid 0.5'}),
+            (x,np.array(instances), {'legend':'# instances', 'with': 'linespoints'}),
+            xlabel="iterations",
+            ylabel="Count",
+            hardcopy="plots/adapt_scenario.png")
 # Plot RTT distribution
 #plot_rtt_distribution()
 
@@ -104,4 +129,7 @@ def plot_log_adaptation():
 #plot_slaviol_instances(10)
 
 # Plot scaling adaptation to RTT SLA using log
-plot_log_adaptation()
+#plot_log_adaptation()
+
+# Plot adaptation scenario based on nb of clients
+plot_adapt_scenario()

@@ -108,6 +108,19 @@ class Infra:
         for i in range(0, n):
             self.clients.add(Client(med_rtt))
     
+    def scale_clients(self,n, med_rtt):
+        n = max(1, n)
+        
+        if n < len(self.clients):
+            while len(self.clients) > n:
+                c = self.clients.pop()
+                for i in self.instances:
+                    if c in i.used_by:
+                        i.used_by.remove(c)
+        elif n > len(self.clients):
+            while len(self.clients) < n:
+                self.clients.add(Client(med_rtt))
+    
     # Scale number of instances to n
     def scale_instances(self, n):
         # min n to total number of nodes
