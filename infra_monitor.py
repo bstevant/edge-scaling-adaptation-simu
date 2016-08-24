@@ -1,3 +1,5 @@
+from edge_infra import Infra
+
 class InfraMonitor:
     infra = None
     
@@ -13,7 +15,7 @@ class InfraMonitor:
         nb_violation = 0
         # Count number of client with current_link > SLA
         for c in self.infra.clients:
-            if (c.current_link != None) and (c.current_link.rtt > rtt_sla):
+            if (c.current_link == None) or (c.current_link.rtt > rtt_sla):
                 nb_violation += 1
         return nb_violation
     

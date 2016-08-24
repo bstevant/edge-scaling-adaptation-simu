@@ -1,21 +1,19 @@
 import random
 
 class Node:
-    name = ""
     nb_nodes = 0
-    # Set containing clients for this node
-    used_by = set()
     
     def __init__(self):
         Node.nb_nodes += 1
         self.name = self.gen_node_name()
+        # Set containing clients for this node
+        self.used_by = set()
     
     # Generate a name nXXX
     def gen_node_name(self):
         return "n" + str(Node.nb_nodes)
 
 class Link:
-    rtt = 0
     
     def __init__(self, med_rtt):
         self.rtt = self.select_dest_uni(med_rtt)
@@ -87,16 +85,19 @@ class Client(Node):
         selected.used_by.add(self)
 
 class Infra:
-    # Available nodes in the infrastructure
-    nodes = set()
-    # Nodes hosting an instance of the service
-    instances = set()
-    # Clients of the infrastructure
-    clients = set()
     
     def __init__(self, nb_nodes, nb_clients, med_rtt):
+        # Available nodes in the infrastructure
+        self.nodes = set()
+        # Nodes hosting an instance of the service
+        self.instances = set()
+        # Clients of the infrastructure
+        self.clients = set()
+        
+        # Init infrastructure
         self.create_nodes(nb_nodes)
         self.create_clients(nb_clients, med_rtt)
+
     
     # Create nodes
     def create_nodes(self, n):
