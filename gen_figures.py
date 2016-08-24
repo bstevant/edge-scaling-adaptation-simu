@@ -4,6 +4,9 @@ from edge_infra import Link, Infra
 from infra_monitor import InfraMonitor
 from adaptation_engine import AdaptationEngine
 
+if not os.path.exists("./plots"):
+    os.makedirs("./plots")
+
 ################################################
 # Plot RTT distribution for 500 links
 def plot_rtt_distribution():
@@ -17,7 +20,7 @@ def plot_rtt_distribution():
         h2 = np.cumsum(h)
         b2 = b[1:]
         gp.plot(b2,h2, 
-                hardcopy="plots/rtt_dist.png",
+                hardcopy="./plots/rtt_dist.png",
                 title="Cumulative distribution of RTT",
                 xlabel="RTT (ms)",
                 ylabel="# nodes (cumul)")
@@ -69,7 +72,7 @@ def plot_slaviol_instances(nb_run):
             (nx,np.average(curves[50], axis=0), {'legend':'50%'}),
             (nx,np.average(curves[100], axis=0), {'legend':'100%'}),
             (nx,np.average(curves[200], axis=0), {'legend':'200%'}),
-            hardcopy="plots/slaviol_instances.png",
+            hardcopy="./plots/slaviol_instances.png",
             title="Variation of SLA violations with service deployment",
             xlabel="# services instances",
             ylabel="# SLA violations")
@@ -95,7 +98,7 @@ def plot_log_adaptation():
             (x,np.array(instances), {'legend':'# instances', 'with': 'linespoints linewidth 2'}),
             xlabel="iterations",
             ylabel="Count",
-            hardcopy="plots/adapt_log.png")
+            hardcopy="./plots/adapt_log.png")
 
 ##################################################
 # Plot adaptation scenario based on nb of clients
@@ -121,7 +124,7 @@ def plot_adapt_scenario():
             (x,np.array(instances), {'legend':'# instances', 'with': 'linespoints'}),
             xlabel="iterations",
             ylabel="Count",
-            hardcopy="plots/adapt_scenario.png")
+            hardcopy="./plots/adapt_scenario.png")
 # Plot RTT distribution
 #plot_rtt_distribution()
 
